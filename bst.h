@@ -470,7 +470,7 @@ template<typename Key, typename Value>
 BinarySearchTree<Key, Value>::~BinarySearchTree()
 {
     // TODO
-
+    this->clear(); 
 }
 
 /**
@@ -896,21 +896,35 @@ void BinarySearchTree<Key, Value>::clear()
     // Delete node
 
     // If the tree is already empty, return
-    if (root_ == nullptr){
+    if (empty()){
         return;
     }
 
-    BinarySearchTree<Key, Value> leftTree; 
-    BinarySearchTree<Key, Value> rightTree;
-    leftTree.root_ = root_->getLeft();
-    rightTree.root_ = root_->getRight(); 
+    else{
+        BinarySearchTree<Key, Value> left; 
+        left.root_ = root_->getLeft(); 
 
-    leftTree.clear();
-    rightTree.clear();
+        BinarySearchTree<Key, Value> right;
+        right.root_ = root_->getRight();
 
-    delete root_;
-    root_ = nullptr;
+        left.clear();
+        right.clear();
 
+        if (root_ != nullptr){
+            if (root_->getParent() != nullptr){
+                if (root_->getKey() < root_->getParent()->getKey()){
+                    root_->getParent()->setLeft(nullptr);
+                }
+
+                else if (root_->getKey() >= root_->getParent()->getKey()){
+                    root_->getParent()->setRight(nullptr);
+                }
+            }
+            delete root_;
+            root_ = nullptr; 
+        }
+
+    }
 
 }
 
