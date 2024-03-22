@@ -248,7 +248,7 @@ protected:
 
     // Add helper functions here
     Node<Key, Value> *getLargestNode() const; 
-    int countHeight(const Node<Key, Value>* inputNode) const;
+    virtual int countHeight(const Node<Key, Value>* inputNode) const;
 
 protected:
     Node<Key, Value>* root_;
@@ -657,6 +657,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 
         // Delete node
         delete wantedNode;
+        wantedNode = nullptr;
 
         return;
     }
@@ -708,14 +709,12 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
             
             child->setParent(nullptr);
             
-
             root_ = child;
-
-
         }
 
         // Delete node
         delete wantedNode; 
+        wantedNode = nullptr;
 
         return;
     }
@@ -807,6 +806,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
         }
 
         delete wantedNode;
+        wantedNode = nullptr;
         return; 
     }
 }
